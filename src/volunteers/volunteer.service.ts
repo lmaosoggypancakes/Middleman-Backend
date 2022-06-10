@@ -33,4 +33,8 @@ export class VolunteerService {
   async createManyUsers(data: Prisma.VolunteerCreateManyInput) {
     return await this.prisma.volunteer.createMany({ data });
   }
+
+  async getUserById(id: number) {
+    return await this.prisma.volunteer.findUnique({ where: { ID: id } });
+  }
 }

@@ -14,7 +14,7 @@ import { NotFoundError } from 'rxjs';
 import { PrismaService } from 'src/prisma.service';
 import { VolunteerService } from './volunteer.service';
 @Controller('api/volunteers/')
-export class VolunteersController {
+export class VolunteerController {
   constructor(private volunteerService: VolunteerService) {}
 
   @Get()
@@ -62,6 +62,17 @@ export class VolunteersController {
     id = parseInt(id);
     try {
       return await this.volunteerService.deleteUser(id);
+    } catch (err) {
+      console.error(err);
+      throw new NotFoundException(err);
+    }
+  }
+
+  @Get(':id')
+  async getUserById(@Param('id') id): Promise<Volunteer> {
+    id = parseInt(id);
+    try {
+      return await this.volunteerService.getUserById(id);
     } catch (err) {
       console.error(err);
       throw new NotFoundException(err);
